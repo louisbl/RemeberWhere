@@ -25,7 +25,7 @@ public class Map extends Activity {
         mapView.setOnMapLongClickListener(new MapView.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng point) {
-                
+
             }
         });
 

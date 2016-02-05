@@ -68,6 +68,9 @@ public class Map extends Activity {
     }
     @Override
     public void onBackPressed() {
+        /* TO Dn
+        Mettre un Intent Avec un flag pour remetre en premier plan la maimActivity
+        * */
         Map.this.finish();
     }
 }

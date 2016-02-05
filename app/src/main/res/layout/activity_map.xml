@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+    tools:context="fr.julienguillaume.remeberme.Map">
+    <com.mapbox.mapboxsdk.views.MapView
+        android:id="@+id/map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        mapbox:access_token="pk.eyJ1Ijoid2lsbGlhbXZpIiwiYSI6ImNpazlvZDRnZTAwMHh3Nmx5bmE0MWw3MjMifQ.VWhJu7-uV9cOmnTmZsQD7A"/>
+
+</LinearLayout>

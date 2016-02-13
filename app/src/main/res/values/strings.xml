@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">RemeberMe</string>
     <string name="textHomeButton">Cartes des Notes</string>
+    <string name="splachText">Hello ! :)</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

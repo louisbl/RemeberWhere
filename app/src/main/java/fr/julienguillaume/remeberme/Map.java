@@ -1,17 +1,21 @@
 package fr.julienguillaume.remeberme;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
+
 
 import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.views.MapView;
 
+import fr.julienguillaume.remeberme.notes.DialogFragment;
+
 public class Map extends Activity {
 
     protected MapView mapView;
+    android.app.FragmentManager fm = getFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +29,8 @@ public class Map extends Activity {
         mapView.setOnMapLongClickListener(new MapView.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng point) {
-
+                DialogFragment popupFrag = new DialogFragment();
+                popupFrag.show(fm , "Add new Note");
             }
         });
 
@@ -68,9 +73,8 @@ public class Map extends Activity {
     }
     @Override
     public void onBackPressed() {
-        /* TO Dn
-        Mettre un Intent Avec un flag pour remetre en premier plan la maimActivity
-        * */
-        Map.this.finish();
+        Intent mainIntent = new Intent(Map.this, MainActivity.class);
+        Map.this.startActivity(mainIntent);
+        this.finish();
     }
 }

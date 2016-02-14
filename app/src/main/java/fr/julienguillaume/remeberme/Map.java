@@ -29,8 +29,7 @@ public class Map extends Activity {
         mapView.setOnMapLongClickListener(new MapView.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng point) {
-                DialogFragment popupFrag = new DialogFragment();
-                popupFrag.show(fm , "Add new Note");
+                DialogFragment.newInstance(point).show(fm , "Nouvelle Note");
             }
         });
 

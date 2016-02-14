@@ -7,8 +7,24 @@ import com.orm.SugarRecord;
  * Created by William on 14/02/2016.
  */
 public class Note extends SugarRecord {
-    LatLng point;
+    double lat , log;
     String text;
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLog() {
+        return log;
+    }
+
+    public void setLog(double log) {
+        this.log = log;
+    }
 
     public Note() {
     }
@@ -21,16 +37,9 @@ public class Note extends SugarRecord {
         this.text = text;
     }
 
-    public LatLng getPoint() {
-        return point;
-    }
-
-    public void setPoint(LatLng point) {
-        this.point = point;
-    }
 
     @Override
     public String toString() {
-        return "Point :"+getPoint().toString()+" text : "+getText().toString();
+        return "Point :"+ getLat()+" "+ getLog() +" text : " + getText().toString();
     }
 }

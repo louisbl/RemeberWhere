@@ -1,21 +1,29 @@
 package fr.julienguillaume.remeberme;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.views.MapView;
 
+import java.util.List;
+
 import fr.julienguillaume.remeberme.notes.DialogFragment;
+import fr.julienguillaume.remeberme.notes.Note;
 
 public class Map extends Activity {
 
+    private static final String TAG = "Map" ;
     protected MapView mapView;
     android.app.FragmentManager fm = getFragmentManager();
+    DialogFragment frag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +37,13 @@ public class Map extends Activity {
         mapView.setOnMapLongClickListener(new MapView.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng point) {
-                DialogFragment.newInstance(point).show(fm , "Nouvelle Note");
+                frag = DialogFragment.newInstance(point, "map");
+                frag.show(fm, "Add new");
             }
+
         });
 
     }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -75,5 +84,17 @@ public class Map extends Activity {
         Intent mainIntent = new Intent(Map.this, MainActivity.class);
         Map.this.startActivity(mainIntent);
         this.finish();
+    }
+
+    /**
+     * Place les marqueur sur la map
+     */
+    public void  RefreshMap(){
+        List<Note> notes = Note.listAll(Note.class);
+        for (Note note: notes) {
+            mapView.addMarker(new MarkerOptions()
+                    .position(new LatLng(note.getLat(),note.getLog()))
+                    .title(note.getText()));
+        }
     }
 }

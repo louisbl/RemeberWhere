@@ -16,7 +16,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 
 import fr.julienguillaume.remeberme.R;
 
@@ -25,6 +27,7 @@ public class NoteActivity extends AppCompatActivity  implements GoogleApiClient.
     private DialogFragment frag;
     FragmentManager fm = getFragmentManager();
     private GoogleApiClient mGoogleApiClient;
+    private boolean mTracking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,8 @@ public class NoteActivity extends AppCompatActivity  implements GoogleApiClient.
                 .addApi(LocationServices.API)
                 .build();
         mGoogleApiClient.connect();
+        Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        final LatLng point = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,18 +55,10 @@ public class NoteActivity extends AppCompatActivity  implements GoogleApiClient.
     }
     @Override
     public void onConnected(Bundle bundle) {
-        Log.d(TAG, "onConnected: Google API client");
-        if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
-                showLocationUnavailableMessage();
-                setTracking(false);
-            }
-            ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_LOCATION);
-        } else {
             setTracking(true);
-        }
     }
     private void setTracking(boolean tracking) {
+
         if (mTracking == tracking) {
             return;
         }
@@ -73,11 +70,11 @@ public class NoteActivity extends AppCompatActivity  implements GoogleApiClient.
             locationRequest.setInterval(1000);
             locationRequest.setFastestInterval(1000);
             locationRequest.setSmallestDisplacement(5);
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
-            setLastLocationMarkerIcon(mLastLocationMarkerIconActive);
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, (com.google.android.gms.location.LocationListener) NoteActivity.this);
+
         } else {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-            setLastLocationMarkerIcon(mLastLocationMarkerIconStale);
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (com.google.android.gms.location.LocationListener) NoteActivity.this);
+
         }
     }
     @Override

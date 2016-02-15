@@ -32,8 +32,9 @@ public class Map extends Activity {
         mapView = (MapView) findViewById(R.id.map_view);
         mapView.setStyleUrl(Style.MAPBOX_STREETS);
         mapView.setLatLng(new LatLng(46.6756, 4.3727));
-        mapView.setZoom(11);
+        mapView.setZoom(4);
         mapView.onCreate(savedInstanceState);
+        RefreshMap();
         mapView.setOnMapLongClickListener(new MapView.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng point) {
@@ -91,10 +92,12 @@ public class Map extends Activity {
      */
     public void  RefreshMap(){
         List<Note> notes = Note.listAll(Note.class);
-        for (Note note: notes) {
-            mapView.addMarker(new MarkerOptions()
-                    .position(new LatLng(note.getLat(),note.getLog()))
-                    .title(note.getText()));
+            if(!notes.isEmpty()){
+            for (Note note: notes) {
+                mapView.addMarker(new MarkerOptions()
+                        .position(new LatLng(note.getLat(),note.getLog()))
+                        .title(note.getText()));
+            }
         }
     }
 }

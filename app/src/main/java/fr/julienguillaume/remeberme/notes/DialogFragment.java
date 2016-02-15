@@ -41,8 +41,10 @@ public class DialogFragment extends android.app.DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_dialog, container, false);
+        setStyle(DialogFragment.STYLE_NO_FRAME, android.R.style.Theme_Holo_Light_Dialog     );
         getDialog().setTitle("Ajouter une nouvelle note");
+        View rootView = inflater.inflate(R.layout.fragment_dialog, container, false);
+
         Button saveBtn = (Button) rootView.findViewById(R.id.saveNote);
         mEdit   = (EditText) rootView.findViewById(R.id.editText);
 

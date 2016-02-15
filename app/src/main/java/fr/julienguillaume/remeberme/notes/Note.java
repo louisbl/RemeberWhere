@@ -37,7 +37,9 @@ public class Note extends SugarRecord {
         this.text = text;
     }
 
-
+    public LatLng getPosition(){
+        return new LatLng(lat, log);
+    }
     @Override
     public String toString() {
         return "Point :"+ getLat()+" "+ getLog() +" text : " + getText().toString();
